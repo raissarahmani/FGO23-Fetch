@@ -59,22 +59,25 @@ const arrPokemon = () => {
             dataPoke.map((el) =>
                 fetch(el.url)
                     .then((abilityResponse) => {
-                        if (!abilityResponse.ok) throw new Error(abilityResponse.statusText);
-                        return abilityResponse.json();
+                        if (!abilityResponse.ok) throw new Error(abilityResponse.statusText)
+                        return abilityResponse.json()
                     })
                     .then((linkAbilities) => ({
                         name: el.name,
                         abilities: linkAbilities.abilities.map((i) => i.ability.name),
                     }))
+                    .catch((err) => {
+                        if (err instanceof Error) console.log(err.message)
+                    })
             )
-        );
+        )
     })
     .then((pokemonData) => {
-        console.log(pokemonData);
+        console.log(pokemonData)
     })
     .catch((err) => {
         if (err instanceof Error) console.log(err.message);
-    });
-};
+    })
+}
 arrPokemon()
 
